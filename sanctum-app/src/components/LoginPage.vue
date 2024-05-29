@@ -1,0 +1,109 @@
+<template>
+  <HeaderPage />
+  <section id="login">
+    <div class="wrapper">
+      <div class="login-container">
+        <div class="login-details">
+          <h1>BetaMart</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, velit
+            hic deleniti voluptatum veniam ea.
+          </p>
+        </div>
+        <form @submit.prevent="loginUser">
+          <div class="field-con">
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              id="email"
+              v-model="email"
+              placeholder="Email"
+              @input="clearErrors"
+              required
+            />
+            <small class="text-danger" v-if="errors">{{ errors }}</small>
+          </div>
+          <div class="field-con">
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              placeholder="Password"
+              v-model="password"
+              @input="clearErrors"
+              required
+            />
+          </div>
+          <div class="btn-con">
+            <button type="submit" class="btn-primary">LOGIN</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</template>
+  
+<script>
+import HeaderPage from "./partials/HeaderPage.vue";
+import axios from "axios";
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+      errors: null,
+    };
+  },
+  components: {
+    HeaderPage,
+  },
+  methods: {
+    async loginUser() {
+      try {
+        const response = await axios.post(this.$store.state.apiUrl + "/login", {
+          email: this.email,
+          password: this.password,
+        });
+        if (response.status === 201) {
+          localStorage.setItem("user_id", response.data.user_id);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("account_type", response.data.account_type);
+          this.$router.push("/dashboard");
+        }
+      } catch (error) {
+        this.errors = error.response.data.message;
+      }
+    },
+    clearErrors() {
+      this.errors = null;
+    },
+  },
+};
+</script>
+
+<style scoped>
+#login .wrapper {
+  max-width: 1440px;
+}
+
+#login .login-container {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  align-items: center;
+  padding: 200px 0;
+}
+
+#login .login-details {
+  width: 500px;
+}
+
+#login .login-container form {
+  width: 500px;
+  border-radius: 10px;
+  padding: 20px;
+  background: var(--global-color-white);
+  box-shadow: var(--global-shadow);
+}
+</style>

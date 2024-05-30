@@ -3,35 +3,22 @@
   <section id="dashboard">
     <div class="wrapper">
       <div class="dashboard-con">
-        <h2>Products</h2>
+        <h3 class="products">Products</h3>
+        <hr>
         <div class="product-con">
           <div class="filter-con">
             <h4>Filter</h4>
             <div class="filter-row">
-              <input
-                type="checkbox"
-                id="low_price"
-                @change="toggleLowPriceFilter"
-                ref="lowPriceCheckbox"
-              />
+              <input type="checkbox" id="low_price" @change="toggleLowPriceFilter" ref="lowPriceCheckbox" />
               <label for="low_price">LOW PRICE</label>
             </div>
             <div class="filter-row">
-              <input
-                type="checkbox"
-                id="high_price"
-                @change="toggleHighPriceFilter"
-                ref="highPriceCheckbox"
-              />
+              <input type="checkbox" id="high_price" @change="toggleHighPriceFilter" ref="highPriceCheckbox" />
               <label for="high_price">HIGH PRICE</label>
             </div>
           </div>
           <transition-group name="fade" tag="div" class="product-list-con">
-            <div
-              class="product-widget"
-              v-for="product in products"
-              :key="product.product_id"
-            >
+            <div class="product-widget" v-for="product in products" :key="product.product_id">
               <div class="product-img-con">
                 <img src="../assets/default_product.jpg" alt="Image" />
               </div>
@@ -184,11 +171,11 @@ export default {
 
 #dashboard .filter-con {
   position: relative;
-  margin-right: 50px;
+  margin-right: 10px;
   padding-right: 30px;
   max-width: 275px;
-  height: 100%;
-  width: 100%;
+  height: 10%;
+  width: 10%;
 }
 
 #dashboard .filter-con:before {
@@ -199,6 +186,12 @@ export default {
   z-index: -1;
   height: 100%;
   background: var(--global-color-primary);
+}
+
+.products {
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #dashboard .dashboard-con .product-widget {
@@ -237,11 +230,9 @@ export default {
   opacity: 0;
   top: 0;
   left: 0;
-  background: linear-gradient(
-    360deg,
-    rgb(131, 117, 255) 0.01%,
-    rgba(126, 108, 192, 0.1) 100%
-  );
+  background: linear-gradient(360deg,
+      rgb(131, 117, 255) 0.01%,
+      rgba(126, 108, 192, 0.1) 100%);
 }
 
 #dashboard .dashboard-con .product-widget:hover::before {

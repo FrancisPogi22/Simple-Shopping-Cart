@@ -80,14 +80,14 @@ class ProductController extends Controller
     public function filterLowPrice()
     {
         $products = Product::orderBy('price', 'asc')->get();
-        
-        return response()->json($products,200);
+
+        return response()->json($products, 200);
     }
 
     public function filterHighPrice()
     {
         $products = Product::orderBy('price', 'desc')->get();
-        
-        return response()->json($products,200);
+
+        return response()->json($products, 200);
     }
 }

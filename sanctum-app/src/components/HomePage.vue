@@ -44,8 +44,18 @@
                 <button class="btn-primary" @click="viewProduct(product)">
                   View
                 </button>
-                <button class="btn-primary">Edit</button>
-                <button class="btn-primary">Delete</button>
+                <button
+                  class="btn-primary"
+                  @click="toggleEditProduct(product.product_id)"
+                >
+                  Edit
+                </button>
+                <button
+                  class="btn-primary"
+                  @click="toggleDeleteProduct(product.product_id)"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </transition-group>
@@ -58,11 +68,18 @@
     @update:visible="toggleViewProduct"
     :product="selectedProduct"
   />
+  <EditProduct :visible="showEditModal" @update:visible="toggleEditProduct" />
+  <DeleteProduct
+    :visible="showDeleteProduct"
+    @update:visible="toggleDeleteProduct"
+  />
 </template>
 
 <script>
 import HeaderPage from "./partials/HeaderPage.vue";
 import ViewProduct from "./modals/ViewProduct.vue";
+import EditProduct from "./modals/EditProduct.vue";
+import DeleteProduct from "./modals/DeleteProduct.vue";
 
 export default {
   data() {
@@ -70,6 +87,8 @@ export default {
       account_type: 0,
       showOrderModal: false,
       showProductModal: false,
+      showEditModal: false,
+      showDeleteProduct: false,
       selectedProduct: null,
     };
   },
@@ -80,6 +99,8 @@ export default {
   components: {
     HeaderPage,
     ViewProduct,
+    EditProduct,
+    DeleteProduct,
   },
   methods: {
     async fetchProducts() {
@@ -105,6 +126,22 @@ export default {
     },
     toggleViewProduct() {
       this.showProductModal = !this.showProductModal;
+    },
+    toggleEditProduct(id) {
+      this.$store.getters.getProduct(id);
+      this.showEditModal = !this.showEditModal;
+
+      if (this.showEditModal == false) {
+        this.$store.dispatch("fetchProducts");
+      }
+    },
+    toggleDeleteProduct(id) {
+      this.$store.getters.getProduct(id);
+      this.showDeleteProduct = !this.showDeleteProduct;
+
+      if (this.showDeleteProduct == false) {
+        this.$store.dispatch("fetchProducts");
+      }
     },
   },
   computed: {
@@ -227,11 +264,13 @@ export default {
 
 #dashboard .filter-row input {
   width: 15px;
+  cursor: pointer;
   height: 15px;
 }
 
 #dashboard .filter-row label {
   margin-left: 20px;
+  cursor: pointer;
   font-family: "Poppins", sans-serif;
 }
 

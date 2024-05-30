@@ -1,5 +1,4 @@
-lsanctump<?php
-
+<?php
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
@@ -8,9 +7,12 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 
 Route::get('index', [AuthenticationController::class, 'index']);
 Route::post('register', [AuthenticationController::class, 'register']);
@@ -40,4 +42,3 @@ Route::get('orders', [OrderController::class, 'orders']);
 Route::post('checkoutItem/{id}', [OrderController::class, 'checkoutItem']);
 Route::patch('processOrder/{id}', [OrderController::class, 'processOrder']);
 Route::delete('removeOrder/{id}', [OrderController::class, 'removeOrder']);
-

@@ -5,6 +5,7 @@ import HomePage from "../components/HomePage.vue";
 import StorePage from "../components/StorePage.vue";
 import CartPage from "../components/CartPage.vue";
 import OrderPage from "../components/OrderPage.vue";
+import UserPage from "../components/UserPage.vue";
 
 const isAuthenticated = () => {
   return localStorage.getItem("token");
@@ -63,6 +64,12 @@ const routes = [
     path: "/myStore",
     component: StorePage,
     name: "myStore",
+    beforeEnter: adminGuard,
+  },
+  {
+    path: "/userAccounts",
+    component: UserPage,
+    name: "userAccounts",
     beforeEnter: adminGuard,
   },
   {

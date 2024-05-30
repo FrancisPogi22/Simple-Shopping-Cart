@@ -4,15 +4,38 @@ export default createStore({
   state: {
     apiUrl: "http://127.0.0.1:8000/api",
     products: [],
+    product: [],
   },
   getters: {
     getProducts(state) {
       return state.products;
     },
+    getProduct: (state) => (id) => {
+      return axios
+        .get(state.apiUrl + "/showProduct/" + id)
+        .then((response) => {
+          state.product = response.data;
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    },
   },
   mutations: {
     setProducts(state, products) {
       state.products = products;
+    },
+    updateProductName(state, productName) {
+      state.product.product_name = productName;
+    },
+    updateProductDescription(state, productDescription) {
+      state.product.product_description = productDescription;
+    },
+    updateProductQuantity(state, productQuantity) {
+      state.product.quantity = productQuantity;
+    },
+    updateProductPrice(state, productPrice) {
+      state.product.price = productPrice;
     },
   },
   actions: {
@@ -36,6 +59,18 @@ export default createStore({
       } catch (error) {
         alert("Error filtering products: " + error.message);
       }
+    },
+    updateProductName({ commit }, productName) {
+      commit("updateProductName", productName);
+    },
+    updateProductDescription({ commit }, productDescription) {
+      commit("updateProductDescription", productDescription);
+    },
+    updateProductQuantity({ commit }, productQuantity) {
+      commit("updateProductQuantity", productQuantity);
+    },
+    updateProductPrice({ commit }, productPrice) {
+      commit("updateProductPrice", productPrice);
     },
   },
   modules: {},

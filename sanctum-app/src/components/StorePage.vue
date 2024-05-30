@@ -24,33 +24,52 @@
               <p>₱ {{ product.quantity }}</p>
             </div>
             <div class="product-button-con">
-              <button class="btn-primary">Edit</button>
-              <button class="btn-primary">Delete</button>
+              <button
+                class="btn-primary"
+                @click="toggleEditProduct(product.product_id)"
+              >
+                Edit
+              </button>
+              <button
+                class="btn-primary"
+                @click="toggleDeleteProduct(product.product_id)"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
     <AddProduct :visible="showAddProduct" @update:visible="toggleAddProduct" />
+    <EditProduct :visible="showEditModal" @update:visible="toggleEditProduct" />
+    <DeleteProduct
+      :visible="showDeleteProduct"
+      @update:visible="toggleDeleteProduct"
+    />
   </section>
 </template>
 
 <script>
 import AddProduct from "./modals/AddProduct.vue";
 import HeaderPage from "./partials/HeaderPage.vue";
+import EditProduct from "./modals/EditProduct.vue";
+import DeleteProduct from "./modals/DeleteProduct.vue";
 export default {
   data() {
     return {
       showAddProduct: false,
-      account_type: 0,
+      showEditModal: false,
+      showDeleteProduct: false,
     };
   },
   components: {
     AddProduct,
     HeaderPage,
+    EditProduct,
+    DeleteProduct,
   },
   mounted() {
-    this.account_type = localStorage.getItem("account_type");
     this.fetchProducts();
   },
   methods: {
@@ -61,6 +80,22 @@ export default {
       this.showAddProduct = !this.showAddProduct;
 
       if (!this.showAddProduct) {
+        this.$store.dispatch("fetchProducts");
+      }
+    },
+    toggleEditProduct(id) {
+      this.$store.getters.getProduct(id);
+      this.showEditModal = !this.showEditModal;
+
+      if (this.showEditModal == false) {
+        this.$store.dispatch("fetchProducts");
+      }
+    },
+    toggleDeleteProduct(id) {
+      this.$store.getters.getProduct(id);
+      this.showDeleteProduct = !this.showDeleteProduct;
+
+      if (this.showDeleteProduct == false) {
         this.$store.dispatch("fetchProducts");
       }
     },

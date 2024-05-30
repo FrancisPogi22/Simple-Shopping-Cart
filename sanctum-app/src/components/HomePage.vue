@@ -3,22 +3,35 @@
   <section id="dashboard">
     <div class="wrapper">
       <div class="dashboard-con">
-        <h3 class="products">Products</h3>
-        <hr>
+        <h2>Products</h2>
         <div class="product-con">
           <div class="filter-con">
             <h4>Filter</h4>
             <div class="filter-row">
-              <input type="checkbox" id="low_price" @change="toggleLowPriceFilter" ref="lowPriceCheckbox" />
+              <input
+                type="checkbox"
+                id="low_price"
+                @change="toggleLowPriceFilter"
+                ref="lowPriceCheckbox"
+              />
               <label for="low_price">LOW PRICE</label>
             </div>
             <div class="filter-row">
-              <input type="checkbox" id="high_price" @change="toggleHighPriceFilter" ref="highPriceCheckbox" />
+              <input
+                type="checkbox"
+                id="high_price"
+                @change="toggleHighPriceFilter"
+                ref="highPriceCheckbox"
+              />
               <label for="high_price">HIGH PRICE</label>
             </div>
           </div>
           <transition-group name="fade" tag="div" class="product-list-con">
-            <div class="product-widget" v-for="product in products" :key="product.product_id">
+            <div
+              class="product-widget"
+              v-for="product in products"
+              :key="product.product_id"
+            >
               <div class="product-img-con">
                 <img src="../assets/default_product.jpg" alt="Image" />
               </div>
@@ -33,12 +46,14 @@
                 </button>
                 <button
                   class="btn-primary"
+                  v-if="account_type == 1"
                   @click="toggleEditProduct(product.product_id)"
                 >
                   Edit
                 </button>
                 <button
                   class="btn-primary"
+                  v-if="account_type == 1"
                   @click="toggleDeleteProduct(product.product_id)"
                 >
                   Delete
@@ -80,7 +95,10 @@ export default {
     };
   },
   mounted() {
-    this.account_type = localStorage.getItem("account_type");
+    let accountType = localStorage.getItem("account_type");
+    if (accountType) {
+      this.account_type = parseInt(accountType, 10);
+    }
     this.fetchProducts();
   },
   components: {
@@ -171,11 +189,11 @@ export default {
 
 #dashboard .filter-con {
   position: relative;
-  margin-right: 10px;
+  margin-right: 50px;
   padding-right: 30px;
   max-width: 275px;
-  height: 10%;
-  width: 10%;
+  height: 100%;
+  width: 100%;
 }
 
 #dashboard .filter-con:before {
@@ -186,12 +204,6 @@ export default {
   z-index: -1;
   height: 100%;
   background: var(--global-color-primary);
-}
-
-.products {
-  max-width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 #dashboard .dashboard-con .product-widget {
@@ -230,9 +242,11 @@ export default {
   opacity: 0;
   top: 0;
   left: 0;
-  background: linear-gradient(360deg,
-      rgb(131, 117, 255) 0.01%,
-      rgba(126, 108, 192, 0.1) 100%);
+  background: linear-gradient(
+    360deg,
+    rgb(131, 117, 255) 0.01%,
+    rgba(126, 108, 192, 0.1) 100%
+  );
 }
 
 #dashboard .dashboard-con .product-widget:hover::before {
@@ -254,7 +268,8 @@ export default {
 }
 
 #dashboard .filter-row input {
-  width: 15px;
+  max-width: 15px;
+  width: 100%;
   cursor: pointer;
   height: 15px;
 }
@@ -295,5 +310,62 @@ export default {
   width: 100%;
   object-fit: cover;
   height: 100%;
+}
+
+@media screen and (max-width: 767px) {
+  #dashboard .product-con {
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  #dashboard .filter-row input {
+    max-width: 12px;
+  }
+
+  #dashboard .filter-con:before {
+    height: 3px;
+    width: 100%;
+    bottom: 0;
+  }
+
+  #dashboard .filter-con {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 50px;
+  }
+
+  #dashboard .filter-con h4 {
+    width: 100%;
+  }
+
+  #dashboard .product-list-con {
+    justify-content: center;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px){
+  #dashboard .product-con {
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  #dashboard .filter-con {
+    padding: 0;
+    margin: 0;
+    max-width: 200px;
+    width: 100%;
+  }
+
+  #dashboard .product-con {
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  #dashboard .product-list-con {
+    justify-content: center;
+  }
 }
 </style>

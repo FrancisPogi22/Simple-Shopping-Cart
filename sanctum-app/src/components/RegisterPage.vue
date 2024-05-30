@@ -185,14 +185,42 @@ export default {
 }
 
 #register .register-details {
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
 }
 
 #register .register-container form {
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
   border-radius: 10px;
   padding: 20px;
   background: var(--global-color-white);
   box-shadow: var(--global-shadow);
+}
+
+@media screen and (max-width: 767px) {
+  #register .register-container {
+    padding: 100px 0;
+    text-align: center;
+    gap: 50px;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #register .register-container {
+    padding: 100px 0;
+    text-align: center;
+    gap: 50px;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  #register .register-container {
+    flex-direction: row;
+    padding: 200px 0;
+    text-align: left;
+  }
 }
 </style>

@@ -13,40 +13,40 @@
           <div class="field-con">
             <input
               type="text"
-              id="productName"
-              v-model="this.$store.state.product.product_name"
-              @input="updateProductName"
-              placeholder="Enter Product Name"
+              id="userName"
+              v-model="this.$store.state.user.user_name"
+              @input="updateUserName"
+              placeholder="Enter User Name"
               required
             />
           </div>
           <div class="field-con">
             <input
               type="text"
-              id="productDescription"
-              v-model="this.$store.state.product.product_description"
-              @input="updateProductDescription"
-              placeholder="Enter Product Description"
+              id="fullName"
+              v-model="this.$store.state.user.full_name"
+              @input="updateFullName"
+              placeholder="Enter Full Name"
               required
             />
           </div>
           <div class="field-con">
             <input
               type="text"
-              id="productQuantity"
-              v-model="this.$store.state.product.quantity"
-              @input="updateProductQuantity"
-              placeholder="Enter Product Quantity"
+              id="email"
+              v-model="this.$store.state.user.email"
+              @input="updateEmail"
+              placeholder="Enter Email"
               required
             />
           </div>
           <div class="field-con">
             <input
               type="text"
-              id="productPrice"
-              v-model="this.$store.state.product.price"
-              @input="updateProductPrice"
-              placeholder="Enter Product Price"
+              id="address"
+              v-model="this.$store.state.user.address"
+              @input="updateAddress"
+              placeholder="Enter Address"
               required
             />
           </div>
@@ -55,7 +55,7 @@
           <button class="btn-secondary" @click="CloseModal()">Close</button>
           <button
             type="button"
-            @click="UpdateProduct()"
+            @click="UpdateUser()"
             class="btn btn-primary"
           >
             Update
@@ -65,18 +65,18 @@
     </div>
   </div>
 </template>
-
-<script>
+  
+  <script>
 import axios from "axios";
 export default {
-  name: "EditProduct",
+  name: "EditUser",
   data() {
     return {
       openClose: this.visible,
-      productName: this.$store.state.product.product_name,
-      productDescription: this.$store.state.product.product_description,
-      quantity: this.$store.state.product.quantity,
-      price: this.$store.state.product.price,
+      userName: this.$store.state.user.user_name,
+      fullName: this.$store.state.user.full_name,
+      email: this.$store.state.user.email,
+      address: this.$store.state.user.address,
       errors: null,
     };
   },
@@ -84,41 +84,41 @@ export default {
     visible: Boolean,
   },
   methods: {
-    updateProductName() {
+    updateUserName() {
       this.$store.dispatch(
-        "updateProductName",
-        this.$store.state.product.product_name
+        "updateUserName",
+        this.$store.state.user.user_name
       );
     },
-    updateProductDescription() {
+    updateFullName() {
       this.$store.dispatch(
-        "updateProductDescription",
-        this.$store.state.product.product_description
+        "updateFullName",
+        this.$store.state.user.full_name
       );
     },
-    updateProducQuantity() {
+    updateEmail() {
       this.$store.dispatch(
-        "updateProducQuantity",
-        this.$store.state.product.quantity
+        "updateEmail",
+        this.$store.state.user.email
       );
     },
-    updateProductPrice() {
+    updateAddress() {
       this.$store.dispatch(
-        "updateProductPrice",
-        this.$store.state.product.price
+        "updateAddress",
+        this.$store.state.user.address
       );
     },
-    async UpdateProduct() {
+    async UpdateUser() {
       try {
         const response = await axios.put(
           this.$store.state.apiUrl +
-            "/editProduct/" +
-            this.$store.state.product.product_id,
+            "/editUser/" +
+            this.$store.state.user.id,
           {
-            productName: this.$store.state.product.product_name,
-            productDescription: this.$store.state.product.product_description,
-            quantity: this.$store.state.product.quantity,
-            price: this.$store.state.product.price,
+            userName: this.$store.state.user.user_name,
+            fullName: this.$store.state.user.full_name,
+            email: this.$store.state.user.email,
+            address: this.$store.state.user.address,
             user_id: localStorage.getItem("user_id"),
           }
         );
@@ -147,11 +147,3 @@ export default {
   },
 };
 </script>
-  
-<style scoped>
-#viewProduct img {
-  width: 250px;
-  height: 200px;
-  object-fit: cover;
-}
-</style>

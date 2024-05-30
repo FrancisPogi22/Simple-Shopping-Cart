@@ -11,26 +11,46 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return response([$users], 201);
+        return response($users, 200);
     }
 
-    public function showUser(Request $request, $id)
+    public function showUser($id)
     {
-        return response(["Show User"], 201);
-    }
+        $user = User::find($id);
 
-    public function registerUser(Request $request)
-    {
-        return response(["Register User"], 201);
+        return response()->json($user, 200);
     }
 
     public function editUser(Request $request, $id)
     {
-        return response(["Edit User"], 201);
+        $request->validate([
+            'userName' => 'required',
+            'fullName' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'address' => 'required',
+        ]);
+
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $user->update([
+            'user_name' => $request->userName,
+            'full_name' => $request->fullName,
+            'email' => $request->email,
+            'price' => $request->address,
+        ]);
+
+        return response()->json(['message' => 'Successfully Updated'], 200);
     }
 
-    public function removeUser(Request $request, $id)
+    public function removeUser($id)
     {
-        return response(["Remove User"], 201);
+        $user = User::find($id);
+        $user->delete();
+
+        return response()->json(['Successfully Removed User'], 200);
     }
 }

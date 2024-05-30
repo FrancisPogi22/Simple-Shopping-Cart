@@ -68,7 +68,7 @@ export default {
         if (response.status === 201) {
           localStorage.setItem("user_id", response.data.user_id);
           localStorage.setItem("token", response.data.token);
-          localStorage.setItem("account_type", response.data.account_type);
+          localStorage.setItem("account_type", JSON.stringify(response.data.account_type));
           this.$router.push("/dashboard");
         }
       } catch (error) {
@@ -92,18 +92,45 @@ export default {
   justify-content: center;
   gap: 100px;
   align-items: center;
-  padding: 200px 0;
 }
 
 #login .login-details {
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
 }
 
 #login .login-container form {
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
   border-radius: 10px;
   padding: 20px;
   background: var(--global-color-white);
   box-shadow: var(--global-shadow);
+}
+
+@media screen and (max-width: 767px) {
+  #login .login-container {
+    padding: 100px 0;
+    text-align: center;
+    gap: 50px;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #login .login-container {
+    padding: 100px 0;
+    text-align: center;
+    gap: 50px;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  #login .login-container {
+    flex-direction: row;
+    padding: 200px 0;
+    text-align: left;
+  }
 }
 </style>

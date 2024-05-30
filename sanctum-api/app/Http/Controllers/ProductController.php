@@ -42,27 +42,50 @@ class ProductController extends Controller
         return response(['message' => 'Product Added Successfully'], 201);
     }
 
-    public function editProduct(Request $request)
+    public function editProduct(Request $request, $id)
     {
-        return response(['Edit Product'], 201);
+        $request->validate([
+            'productName' => 'required',
+            'productDescription' => 'required',
+            'quantity' => 'required',
+            'price' => 'required',
+        ]);
+
+        $product = Product::where('product_id', $id)->first();
+
+        if (!$product) {
+            return response()->json(['message' => 'Product not found'], 404);
+        }
+
+        $product->update([
+            'product_name' => $request->productName,
+            'product_description' => $request->productDescription,
+            'quantity' => $request->quantity,
+            'price' => $request->price,
+        ]);
+
+        return response()->json(['message' => 'Successfully Updated'], 200);
     }
 
-    public function removeProduct(Request $request)
+    public function removeProduct($id)
     {
-        return response(['Remove Product'], 201);
+        $product = Product::find($id);
+        $product->delete();
+
+        return response()->json(['Successfully Removed Product'], 200);
     }
 
     public function filterLowPrice()
     {
         $products = Product::orderBy('price', 'asc')->get();
-        
-        return response()->json($products,200);
+
+        return response()->json($products, 200);
     }
 
     public function filterHighPrice()
     {
         $products = Product::orderBy('price', 'desc')->get();
-        
-        return response()->json($products,200);
+
+        return response()->json($products, 200);
     }
 }

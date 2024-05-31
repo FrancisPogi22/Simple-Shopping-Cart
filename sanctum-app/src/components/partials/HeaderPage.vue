@@ -10,9 +10,9 @@
           <router-link v-if="isAuthenticate" to="/dashboard"
             >Dashboard</router-link
           >
-          <router-link v-if="account_type == 1" to="/myStore"
+          <!-- <router-link v-if="account_type == 1" to="/myStore"
             >My Store</router-link
-          >
+          > -->
           <router-link v-if="account_type == 1" to="/userAccounts"
             >Accounts</router-link
           >
@@ -39,9 +39,9 @@
           <router-link v-if="isAuthenticate" to="/dashboard"
             >Dashboard</router-link
           >
-          <router-link v-if="account_type == 1" to="/myStore"
+          <!-- <router-link v-if="account_type == 1" to="/myStore"
             >My Store</router-link
-          >
+          > -->
           <router-link v-if="account_type == 1" to="/userAccounts"
             >Accounts</router-link
           >
@@ -70,3 +70,17 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#header {
+  text-decoration: dashed;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color:green;
+  z-index: 10;
+  text-transform:uppercase;
+  
+}
+</style>

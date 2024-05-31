@@ -162,7 +162,7 @@ export default {
 }
 
 #store .store-container .product-widget:hover::before {
-  opacity: 1;
+  opacity: 10;
 }
 
 #store .store-container .product-widget:hover .product-button-con {

@@ -10,7 +10,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
-          <img src="../../assets/default_product.jpg" alt="Image" />
+          <img src="../../assets/default_product.webp" alt="Image" />
           <div class="product-details-con">
             <div class="product-name-con">
               <h3>{{ displayedProduct.product_name }}</h3>

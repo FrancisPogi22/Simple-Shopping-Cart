@@ -9,40 +9,7 @@
   >
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-body">
-          <div class="field-con">
-            <input
-              type="text"
-              id="userName"
-              v-model="this.$store.state.user.user_name"
-              readonly
-            />
-          </div>
-          <div class="field-con">
-            <input
-              type="text"
-              id="fullName"
-              v-model="this.$store.state.user.full_name"
-              readonly
-            />
-          </div>
-          <div class="field-con">
-            <input
-              type="text"
-              id="email"
-              v-model="this.$store.state.user.email"
-              readonly
-            />
-          </div>
-          <div class="field-con">
-            <input
-              type="text"
-              id="address"
-              v-model="this.$store.state.user.address"
-              readonly
-            />
-          </div>
-        </div>
+       
         <div class="modal-footer">
           <button class="btn-secondary" @click="CloseModal()">Close</button>
           <button

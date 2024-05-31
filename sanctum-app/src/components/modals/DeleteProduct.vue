@@ -9,40 +9,7 @@
   >
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-body">
-          <div class="field-con">
-            <input
-              type="text"
-              id="productName"
-              v-model="this.$store.state.product.product_name"
-              readonly
-            />
-          </div>
-          <div class="field-con">
-            <input
-              type="text"
-              id="productDescription"
-              v-model="this.$store.state.product.product_description"
-              readonly
-            />
-          </div>
-          <div class="field-con">
-            <input
-              type="text"
-              id="productQuantity"
-              v-model="this.$store.state.product.quantity"
-              readonly
-            />
-          </div>
-          <div class="field-con">
-            <input
-              type="text"
-              id="productPrice"
-              v-model="this.$store.state.product.price"
-              readonly
-            />
-          </div>
-        </div>
+      
         <div class="modal-footer">
           <button class="btn-secondary" @click="CloseModal()">Close</button>
           <button

@@ -2,14 +2,12 @@
   <HeaderPage />
   <section id="login">
     <div class="wrapper">
+      <div class="betamart">
+      <h2>Betamart</h2>
+      <hr>
+      </div>
       <div class="login-container">
-        <div class="login-details">
-          <h1>BetaMart</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, velit
-            hic deleniti voluptatum veniam ea.
-          </p>
-        </div>
+        
         <form @submit.prevent="loginUser">
           <div class="field-con">
             <input
@@ -83,6 +81,13 @@ export default {
 </script>
 
 <style scoped>
+.betamart {
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: -200px;
+  margin-top: 100px;
+}
 #login .wrapper {
   max-width: 1440px;
 }
@@ -104,8 +109,8 @@ export default {
   width: 100%;
   border-radius: 10px;
   padding: 20px;
-  background: var(--global-color-white);
-  box-shadow: var(--global-shadow);
+  /* background: var(--global-color-white);
+  box-shadow: var(--global-shadow); */
 }
 
 @media screen and (max-width: 767px) {
@@ -132,5 +137,9 @@ export default {
     padding: 200px 0;
     text-align: left;
   }
+}
+#btn-primary {
+  background-color: #e9a447;
+  margin-top: 100px;
 }
 </style>

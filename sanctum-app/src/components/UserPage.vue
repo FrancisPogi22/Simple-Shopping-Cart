@@ -191,7 +191,7 @@ table td:last-of-type {
 }
 
 table th {
-  background-color: var(--global-color-secondary);
-  color: var(--global-color-white);
+  background-color: turquoise;
+  color: black;
 }
 </style>

@@ -103,14 +103,14 @@ body {
 .btn-primary {
   border: none;
   cursor: pointer;
-  box-shadow: var(--global-shadow);
+  box-shadow: black;
   font-weight: 600;
   font-family: "Montserrat", sans-serif;
   border-radius: 10px;
   padding: 14px 48px;
   transition: 0.2s;
   color: var(--global-color-white);
-  background: var(--global-color-primary);
+  background-color: #e9a447;
 }
 
 .btn-primary:hover {

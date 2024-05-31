@@ -7,6 +7,7 @@ export default createStore({
     users: [],
     product: [],
     user: [],
+    cart: [],
   },
   getters: {
     getProducts(state) {
@@ -14,6 +15,9 @@ export default createStore({
     },
     getUsers(state) {
       return state.users;
+    },
+    getCart(state) {
+      return state.cart;
     },
     getProduct: (state) => (id) => {
       return axios
@@ -42,6 +46,9 @@ export default createStore({
     },
     setUsers(state, users) {
       state.users = users;
+    },
+    setCart(state, cart) {
+      state.cart = cart;
     },
     updateProductName(state, productName) {
       state.product.product_name = productName;
@@ -81,6 +88,22 @@ export default createStore({
       try {
         const response = await axios.get(state.apiUrl + "/users");
         commit("setUsers", response.data);
+      } catch (error) {
+        alert("Error fetching products: " + error.message);
+      }
+    },
+    async checkOut({ state, commit }, id) {
+      try {
+        const response = await axios.get(state.apiUrl + "/checkout/" + id);
+        commit("setCart", response.data);
+      } catch (error) {
+        alert("Error fetching products: " + error.message);
+      }
+    },
+    async fetchCart({ state, commit }, id) {
+      try {
+        const response = await axios.get(state.apiUrl + "/cart/" + id);
+        commit("setCart", response.data);
       } catch (error) {
         alert("Error fetching products: " + error.message);
       }

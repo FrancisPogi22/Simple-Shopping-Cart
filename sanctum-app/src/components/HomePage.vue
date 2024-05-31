@@ -1,32 +1,39 @@
 <template>
   <HeaderPage />
-
   <section id="dashboard">
     <div class="wrapper">
-
       <div class="dashboard-con">
-        <div class="dash">
-          <h2>Products</h2>
-          <button @click="toggleAddProduct" class="btn-primary">
-            ADD NEW PRODUCT
-          </button>
-        </div>
+        <h2>Products</h2>
         <div class="product-con">
           <div class="filter-con">
             <h4>Filter</h4>
             <div class="filter-row">
-              <input type="checkbox" id="low_price" @change="toggleLowPriceFilter" ref="lowPriceCheckbox" />
+              <input
+                type="checkbox"
+                id="low_price"
+                @change="toggleLowPriceFilter"
+                ref="lowPriceCheckbox"
+              />
               <label for="low_price">LOW PRICE</label>
             </div>
             <div class="filter-row">
-              <input type="checkbox" id="high_price" @change="toggleHighPriceFilter" ref="highPriceCheckbox" />
+              <input
+                type="checkbox"
+                id="high_price"
+                @change="toggleHighPriceFilter"
+                ref="highPriceCheckbox"
+              />
               <label for="high_price">HIGH PRICE</label>
             </div>
           </div>
           <transition-group name="fade" tag="div" class="product-list-con">
-            <div class="product-widget" v-for="product in products" :key="product.product_id">
+            <div
+              class="product-widget"
+              v-for="product in products"
+              :key="product.product_id"
+            >
               <div class="product-img-con">
-                <img src="../assets/default_product.webp" alt="Image" />
+                <img src="../assets/default_product.jpg" alt="Image" />
               </div>
               <div class="product-details">
                 <h4>{{ product.product_name }}</h4>
@@ -37,10 +44,25 @@
                 <button class="btn-primary" @click="viewProduct(product)">
                   View
                 </button>
-                <button class="btn-primary" v-if="account_type == 1" @click="toggleEditProduct(product.product_id)">
+                <button
+                  class="btn-primary"
+                  v-if="account_type == 2"
+                  @click="addToCart(product.product_id)"
+                >
+                  Add to cart
+                </button>
+                <button
+                  class="btn-primary"
+                  v-if="account_type == 1"
+                  @click="toggleEditProduct(product.product_id)"
+                >
                   Edit
                 </button>
-                <button class="btn-primary" v-if="account_type == 1" @click="toggleDeleteProduct(product.product_id)">
+                <button
+                  class="btn-primary"
+                  v-if="account_type == 1"
+                  @click="toggleDeleteProduct(product.product_id)"
+                >
                   Delete
                 </button>
               </div>
@@ -50,23 +72,28 @@
       </div>
     </div>
   </section>
-  <ViewProduct :visible="showProductModal" @update:visible="toggleViewProduct" :product="selectedProduct" />
-  <AddProduct :visible="showAddProduct" @update:visible="toggleAddProduct" />
+  <ViewProduct
+    :visible="showProductModal"
+    @update:visible="toggleViewProduct"
+    :product="selectedProduct"
+  />
   <EditProduct :visible="showEditModal" @update:visible="toggleEditProduct" />
-  <DeleteProduct :visible="showDeleteProduct" @update:visible="toggleDeleteProduct" />
+  <DeleteProduct
+    :visible="showDeleteProduct"
+    @update:visible="toggleDeleteProduct"
+  />
 </template>
 
 <script>
-import AddProduct from "./modals/AddProduct.vue";
 import HeaderPage from "./partials/HeaderPage.vue";
 import ViewProduct from "./modals/ViewProduct.vue";
 import EditProduct from "./modals/EditProduct.vue";
 import DeleteProduct from "./modals/DeleteProduct.vue";
+import axios from "axios";
 
 export default {
   data() {
     return {
-      showAddProduct: false,
       account_type: 0,
       showOrderModal: false,
       showProductModal: false,
@@ -83,7 +110,6 @@ export default {
     this.fetchProducts();
   },
   components: {
-    AddProduct,
     HeaderPage,
     ViewProduct,
     EditProduct,
@@ -107,16 +133,28 @@ export default {
       }
       await this.$store.dispatch("filterProducts", isChecked ? "high" : "");
     },
+    async addToCart(product) {
+      try {
+        const response = await axios.post(
+          this.$store.state.apiUrl + "/addItemCart",
+          {
+            product_id: product,
+            quantity: 1,
+            user_id: localStorage.getItem('user_id'),
+          }
+        );
+
+        if (response.status === 201) {
+          alert("Product Successfully Added.");
+        }
+      } catch (error) {
+        alert(error.response.data.message);
+        this.errors = error.response.data.message;
+      }
+    },
     viewProduct(product) {
       this.selectedProduct = product;
       this.showProductModal = true;
-    },
-    toggleAddProduct() {
-      this.showAddProduct = !this.showAddProduct;
-
-      if (!this.showAddProduct) {
-        this.$store.dispatch("fetchProducts");
-      }
     },
     toggleViewProduct() {
       this.showProductModal = !this.showProductModal;
@@ -163,7 +201,6 @@ export default {
 
 #dashboard .dashboard-con {
   padding: 100px 0;
-
 }
 
 #dashboard .product-list-con {
@@ -181,18 +218,19 @@ export default {
   position: relative;
   margin-right: 50px;
   padding-right: 30px;
-  max-width: 150px;
+  max-width: 275px;
   height: 100%;
-  block-size: fit-content;
+  width: 100%;
 }
 
 #dashboard .filter-con:before {
   content: "";
   position: absolute;
-  width: 4%;
+  width: 3px;
   right: 0;
-  height: 160%;
-  background: turquoise;
+  z-index: -1;
+  height: 100%;
+  background: var(--global-color-primary);
 }
 
 #dashboard .dashboard-con .product-widget {
@@ -231,7 +269,11 @@ export default {
   opacity: 0;
   top: 0;
   left: 0;
-
+  background: linear-gradient(
+    360deg,
+    rgb(131, 117, 255) 0.01%,
+    rgba(126, 108, 192, 0.1) 100%
+  );
 }
 
 #dashboard .dashboard-con .product-widget:hover::before {
@@ -352,13 +394,5 @@ export default {
   #dashboard .product-list-con {
     justify-content: center;
   }
-}
-
-.dash {
-  margin-top: -50px;
-  max-width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 100px;
 }
 </style>

@@ -32,9 +32,6 @@ Route::post('registerUser', [UserController::class, 'registerUser']);
 Route::put('editUser/{id}', [UserController::class, 'editUser']);
 Route::delete('removeUser/{id}', [UserController::class, 'removeUser']);
 
-Route::get('cart/{id}', [CartController::class, 'cart']);
-Route::post('addItemCart/{id}', [CartController::class, 'addItemCart']);
-
 Route::patch('updateQuantityItem/{id}', [CartController::class, 'updateQuantityItem']);
 Route::delete('removeItemCart/{id}', [CartController::class, 'removeItemCart']);
 
@@ -42,3 +39,8 @@ Route::get('orders', [OrderController::class, 'orders']);
 Route::post('checkoutItem/{id}', [OrderController::class, 'checkoutItem']);
 Route::patch('processOrder/{id}', [OrderController::class, 'processOrder']);
 Route::delete('removeOrder/{id}', [OrderController::class, 'removeOrder']);
+
+Route::get('cart/{id}', [CartController::class, 'cart']);
+Route::post('addItemCart', [CartController::class, 'addItemCart']);
+Route::patch('updateQuantityItem/{id}', [CartController::class, 'updateQuantityItem']);
+Route::delete('checkOut/{id}', [CartController::class, 'checkOut']);
